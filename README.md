@@ -19,71 +19,94 @@ grunt.loadNpmTasks('grunt-scorm-manifest');
 
 ## The "scorm_manifest" task
 
-### Overview
+_Run this task with the `grunt scorm_manifest` command._
+
+Task targets, files and options may be specified according to the grunt [Configuring tasks](http://gruntjs.com/configuring-tasks) guide.
+
+Node Libraries Used:
+[xmlbuilder-js](https://github.com/oozcitak/xmlbuilder-js) (for xml generation).
+
+### Config
+
 In your project's Gruntfile, add a section named `scorm_manifest` to the data object passed into `grunt.initConfig()`.
 
 ```js
 grunt.initConfig({
   scorm_manifest: {
-    options: {
-      // Task-specific options go here.
-    },
     your_target: {
-      // Target-specific file lists and/or options go here.
-    },
+		options: {
+		  // Options go here
+		},
+		files: {
+		  // File declaration goes here
+		},
+	},
   },
 });
 ```
 
 ### Options
 
-#### options.separator
+#### options.version
 Type: `String`
-Default value: `',  '`
+Default value: `'2004'`
+Possible values: `2004||1.2`
 
-A string value that is used to do something with whatever.
+This is used to define which version of SCORM will be applied to the manifest.
 
-#### options.punctuation
+#### options.courseId
 Type: `String`
-Default value: `'.'`
+Default value: `'CourseID'`
 
-A string value that is used to do something else with whatever else.
+This is used to define the top-level course ID.
 
-### Usage Examples
+#### options.SCOtitle
+Type: `String`
+Default value: `'SCO Title'`
 
-#### Default Options
-In this example, the default options are used to do something with whatever. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result would be `Testing, 1 2 3.`
+This is used (by `<organization />`) to define the SCO title.
+
+#### options.moduleTitle
+Type: `String`
+Default value: `'Module'`
+
+This is used (by `<item />`) to define the SCO module title.
+
+#### options.launchPage
+Type: `String`
+Default value: `'index.html'`
+
+This is used to define the launchpage of the SCO.
+
+#### options.path
+Type: `String`
+Default value: `'./'`
+
+This is used to define the path to which `imsmanifest.xml` will be written.
+
+### Usage Example
+
+This example creates a SCORM 2004 3rd Edition IMS manifest. The manifest will be written to the project directory and will include files in the project directory and all subdirectories.
 
 ```js
-grunt.initConfig({
-  scorm_manifest: {
-    options: {},
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
-});
+// simple single SCO package
+scorm_manifest: {
+	options: {
+		version: '2004',
+		courseId: 'GRUNT101',
+		SCOtitle: 'Intro to Grunt',
+		moduleTitle: 'AU101',
+		launchPage: 'the_launchpage.html',
+		path: './'
+	},
+	files: [{
+				expand: true,	 	// required
+				cwd: './', 			// start looking for files to list in the same dir as Gruntfile 
+				src: ['**/*.*'], 	// file selector (this example includes subdirectories)
+				filter: 'isFile'	// required
+			}],
+},
 ```
-
-#### Custom Options
-In this example, custom options are used to do something else with whatever else. So if the `testing` file has the content `Testing` and the `123` file had the content `1 2 3`, the generated result in this case would be `Testing: 1 2 3 !!!`
-
-```js
-grunt.initConfig({
-  scorm_manifest: {
-    options: {
-      separator: ': ',
-      punctuation: ' !!!',
-    },
-    files: {
-      'dest/default_options': ['src/testing', 'src/123'],
-    },
-  },
-});
-```
-
-## Contributing
-In lieu of a formal styleguide, take care to maintain the existing coding style. Add unit tests for any new or changed functionality. Lint and test your code using [Grunt](http://gruntjs.com/).
 
 ## Release History
-_(Nothing yet)_
+  * 2013-12-18   v0.2.0   Initial plugin release.
