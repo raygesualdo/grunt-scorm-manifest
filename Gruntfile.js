@@ -42,7 +42,7 @@ module.exports = function(grunt) {
       },
       custom_options: {
         options: {
-          version: '2004',
+          version: '1.2',
 		  courseId: 'MyCourseId',
 		  SCOtitle: 'Learning Course A1000',
 		  moduleTitle: 'AU',
@@ -52,7 +52,7 @@ module.exports = function(grunt) {
         files: [{
 					expand: true, 
 					cwd: './',
-					src: ['**/*.*'], 
+					src: ['**.*'], 
 					filter: 'isFile'
 				}],
       },
