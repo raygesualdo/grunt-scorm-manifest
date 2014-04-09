@@ -40,7 +40,7 @@ grunt.initConfig({
 		files: {
 		  // File declaration goes here
 		}
-	},
+	}
   },
 });
 ```
