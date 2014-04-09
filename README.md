@@ -39,7 +39,7 @@ grunt.initConfig({
 		},
 		files: {
 		  // File declaration goes here
-		},
+		}
 	},
   },
 });
@@ -91,20 +91,22 @@ This example creates a SCORM 2004 3rd Edition IMS manifest. The manifest will be
 ```js
 // simple single SCO package
 scorm_manifest: {
-	options: {
-		version: '2004',
-		courseId: 'GRUNT101',
-		SCOtitle: 'Intro to Grunt',
-		moduleTitle: 'AU101',
-		launchPage: 'the_launchpage.html',
-		path: './'
-	},
-	files: [{
-				expand: true,	 	// required
-				cwd: './', 			// start looking for files to list in the same dir as Gruntfile 
-				src: ['**/*.*'], 	// file selector (this example includes subdirectories)
-				filter: 'isFile'	// required
-			}],
+	your_target: {
+		options: {
+			version: '2004',
+			courseId: 'GRUNT101',
+			SCOtitle: 'Intro to Grunt',
+			moduleTitle: 'AU101',
+			launchPage: 'the_launchpage.html',
+			path: './'
+		},
+		files: [{
+					expand: true,	 	// required
+					cwd: './', 			// start looking for files to list in the same dir as Gruntfile 
+					src: ['**/*.*'], 	// file selector (this example includes subdirectories)
+					filter: 'isFile'	// required
+				}]
+	}
 },
 ```
 
