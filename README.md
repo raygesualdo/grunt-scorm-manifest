@@ -1,4 +1,5 @@
 # grunt-scorm-manifest
+[![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
 
 > A grung plugin that generates a valid SCORM IMS manifest file.
 
@@ -34,14 +35,14 @@ In your project's Gruntfile, add a section named `scorm_manifest` to the data ob
 grunt.initConfig({
   scorm_manifest: {
     your_target: {
-		options: {
-		  // Options go here
-		},
-		files: {
-		  // File declaration goes here
-		},
-	},
-  },
+			options: {
+			  // Options go here
+			},
+			files: {
+			  // File declaration goes here
+			}
+		}
+  }
 });
 ```
 
@@ -91,21 +92,23 @@ This example creates a SCORM 2004 3rd Edition IMS manifest. The manifest will be
 ```js
 // simple single SCO package
 scorm_manifest: {
-	options: {
-		version: '2004',
-		courseId: 'GRUNT101',
-		SCOtitle: 'Intro to Grunt',
-		moduleTitle: 'AU101',
-		launchPage: 'the_launchpage.html',
-		path: './'
-	},
-	files: [{
-				expand: true,	 	// required
-				cwd: './', 			// start looking for files to list in the same dir as Gruntfile 
-				src: ['**/*.*'], 	// file selector (this example includes subdirectories)
-				filter: 'isFile'	// required
-			}],
-},
+	your_target: {
+		options: {
+			version: '2004',
+			courseId: 'GRUNT101',
+			SCOtitle: 'Intro to Grunt',
+			moduleTitle: 'AU101',
+			launchPage: 'the_launchpage.html',
+			path: './'
+		},
+		files: [{
+			expand: true,	 	// required
+			cwd: './', 			// start looking for files to list in the same dir as Gruntfile 
+			src: ['**/*.*'], 	// file selector (this example includes subdirectories)
+			filter: 'isFile'	// required
+		}]
+	}
+}
 ```
 
 ## Release History
