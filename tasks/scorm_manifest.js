@@ -19,6 +19,7 @@ module.exports = function(grunt) {
             SCOtitle: 'SCO Title',
             moduleTitle: 'Module',
             launchPage: 'index.html',
+            scormPath: 'scorm/',
             path: './'
         });
         
@@ -55,7 +56,7 @@ module.exports = function(grunt) {
         
         // Iterate over all specified file groups.
         this.files.forEach(function(f) {
-            
+
             //Make sure multiple files have been specified in Gruntfile
             if (!f.orig.expand) {
                 grunt.log.warn('Multiple files not specified.');
@@ -66,7 +67,6 @@ module.exports = function(grunt) {
             if (f.src.indexOf('imsmanifest.xml') > -1) {
                 return false;
             }
-            
             f.src.filter(function(filepath) {
                 if (!grunt.file.exists(filepath)) {
                     grunt.log.warn('Source file "' + filepath + '" not found.');
@@ -74,13 +74,14 @@ module.exports = function(grunt) {
                 } else {
                     var tObj = {
                         file: {
-                            '@href': filepath,
+                            '@href': f.dest,
                         },
                     };
                     xmlTokens.fileArr.push(tObj);
                     return true;
                 }
             });
+
         });
         
         //Declare XMl structure
@@ -122,7 +123,7 @@ module.exports = function(grunt) {
             xmlDoc.att('xmlns', 'http://www.imsproject.org/xsd/imscp_rootv1p1p2')
                   .att('xmlns:adlcp', 'http://www.adlnet.org/xsd/adlcp_rootv1p2')
                   .att('xmlns:xsi', 'http://www.w3.org/2001/XMLSchema-instance')
-                  .att('xsi:schemaLocation', 'http://www.imsproject.org/xsd/imscp_rootv1p1p2 imscp_rootv1p1p2.xsd http://www.imsglobal.org/xsd/imsmd_rootv1p2p1 imsmd_rootv1p2p1.xsd http://www.adlnet.org/xsd/adlcp_rootv1p2 adlcp_rootv1p2.xsd');
+                  .att('xsi:schemaLocation', 'http://www.imsproject.org/xsd/imscp_rootv1p1p2 '+options.scormPath+'imscp_rootv1p1p2.xsd http://www.imsglobal.org/xsd/imsmd_rootv1p2p1 '+options.scormPath+'imsmd_rootv1p2p1.xsd http://www.adlnet.org/xsd/adlcp_rootv1p2 '+options.scormPath+'adlcp_rootv1p2.xsd');
             break;
           case "2004": //fallthrough
           case "2004v3":
@@ -132,7 +133,7 @@ module.exports = function(grunt) {
                   .att('xmlns:adlseq', 'http://www.adlnet.org/xsd/adlseq_v1p3')
                   .att('xmlns:adlnav', 'http://www.adlnet.org/xsd/adlnav_v1p3')
                   .att('xmlns:imsss', 'http://www.imsglobal.org/xsd/imsss')
-                  .att('xsi:schemaLocation', 'http://www.imsglobal.org/xsd/imscp_v1p1 imscp_v1p1.xsd http://www.adlnet.org/xsd/adlcp_v1p3 adlcp_v1p3.xsd http://www.adlnet.org/xsd/adlseq_v1p3 adlseq_v1p3.xsd http://www.adlnet.org/xsd/adlnav_v1p3 adlnav_v1p3.xsd http://www.imsglobal.org/xsd/imsss imsss_v1p0.xsd');
+                  .att('xsi:schemaLocation', 'http://www.imsglobal.org/xsd/imscp_v1p1 '+options.scormPath+'imscp_v1p1.xsd http://www.adlnet.org/xsd/adlcp_v1p3 '+options.scormPath+'adlcp_v1p3.xsd http://www.adlnet.org/xsd/adlseq_v1p3 '+options.scormPath+'adlseq_v1p3.xsd http://www.adlnet.org/xsd/adlnav_v1p3 '+options.scormPath+'adlnav_v1p3.xsd http://www.imsglobal.org/xsd/imsss '+options.scormPath+'imsss_v1p0.xsd');
             break;
         }
         
@@ -141,10 +142,10 @@ module.exports = function(grunt) {
         
         //Write file to safe path
         options.path = unixifyPath(options.path);
-        grunt.file.write(options.path + 'imsmanifest.xml', prettyXmlDoc);
+        grunt.file.write(this.target + '/imsmanifest.xml', prettyXmlDoc);
         
         //Leave a sucess message
-        grunt.log.writeln('File "' + options.path + 'imsmanifest.xml' + '" created.');
+        grunt.log.writeln('File "' + this.target + '/imsmanifest.xml' + '" created.');
         
     });
     
